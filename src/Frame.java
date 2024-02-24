@@ -1,3 +1,6 @@
+import calculator.CalculatorPanel;
+import calculator.CalculatorTextPanel;
+
 import javax.swing.*;
 import java.awt.*;
 public class Frame extends JFrame {
@@ -12,14 +15,14 @@ public class Frame extends JFrame {
            // EAST panel : Buttons to get to the other functions of the program
 
         // Converter has only 2 panels.
-           // CENTER panel : 2 comboboxes (each of them are attached to a textField)
+           // CENTER panel : 2 comboBoxes (each of them are attached to a textField)
            // EAST panel : Buttons to get toe the other functions of the program
 
         //adding calculator panel to start with and the panel to reach the other panels on the side
-        add(new CalculatorPanel(), BorderLayout.CENTER);
         setTitle("Calculator");
-        add(new OtherFunctionsPanel(this), BorderLayout.EAST);
-        add(new TextPanel(), BorderLayout.NORTH);
+        add(new CalculatorPanel(), BorderLayout.CENTER);
+        add(new SwitchFunctionsPanel(this), BorderLayout.EAST);
+        add(new CalculatorTextPanel(), BorderLayout.NORTH);
         setResizable(false);
         setVisible(true);
     }

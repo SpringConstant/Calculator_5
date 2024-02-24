@@ -1,17 +1,19 @@
+import calculator.CalculatorPanel;
+import calculator.CalculatorTextPanel;
 import converter.ConverterPanel;
-import numberGuessingGame.NumberGuessingGamePanel;
-import numberGuessingGame.NumberGuessingGameTextPanel;
+import number_guessing_game.NumberGuessingGamePanel;
+import number_guessing_game.NumberGuessingGameTextPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class OtherFunctionsButton extends JButton implements ActionListener {
-    public Frame frame;
-    public OtherFunctionsButton(Frame frame, String text) {
+public class SwitchFunctionsButton extends JButton implements ActionListener {
+    private final Frame frame;
+    public SwitchFunctionsButton(Frame frame, String text) {
         this.frame = frame;
         setText(text);
-        setSize(5, 5); //its just 1 button
+        setSize(5, 5);
         setFocusable(false);
         addActionListener(this);
     }
@@ -21,39 +23,34 @@ public class OtherFunctionsButton extends JButton implements ActionListener {
         //remove all the panels from the frame
         frame.getContentPane().removeAll();
 
-
         //set size of the frame
         frame.setPreferredSize(new Dimension(750,500));
-
 
         //set Border for the Frame
         frame.setLayout(new BorderLayout());
 
-
-        //what the NGG, converter and Calculator buttons will do:
+        //what the "NGG", "Converter" and "Calculator" buttons will do:
         switch (getText()) {
             case "Number Guessing Game" -> {
-                frame.add(new  NumberGuessingGamePanel(), BorderLayout.CENTER);
                 frame.setTitle("Number Guessing Game");
+                frame.add(new  NumberGuessingGamePanel(), BorderLayout.CENTER);
                 frame.add(new NumberGuessingGameTextPanel(), BorderLayout.NORTH);
             }
 
             case "Calculator" -> {
-                frame.add(new CalculatorPanel(), BorderLayout.CENTER);
                 frame.setTitle("Calculator");
-                frame.add(new TextPanel(), BorderLayout.NORTH);
+                frame.add(new CalculatorPanel(), BorderLayout.CENTER);
+                frame.add(new CalculatorTextPanel(), BorderLayout.NORTH);
             }
 
             case "Converter" ->{
-                frame.add(new ConverterPanel(), BorderLayout.CENTER);
                 frame.setTitle("Unit Converter");
+                frame.add(new ConverterPanel(), BorderLayout.CENTER);
             }
         }
 
-        frame.add(new OtherFunctionsPanel(frame), BorderLayout.EAST);
+        frame.add(new SwitchFunctionsPanel(frame), BorderLayout.EAST);
         frame.getContentPane().validate();
-        frame.getContentPane().repaint();
-        frame.pack();
         setVisible(true);
     }
 }

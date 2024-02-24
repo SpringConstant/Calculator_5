@@ -1,4 +1,4 @@
-package numberGuessingGame;
+package number_guessing_game;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
