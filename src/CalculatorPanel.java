@@ -6,6 +6,7 @@ public static Button[] operatorsArray = new Button[4];
         setLayout(new GridLayout(4,5,10,10));
         setBorder(BorderFactory.createEmptyBorder(0,2,0,0));
 
+        //Layout of my calculator
         String[] buttonsText = {"7", "8", "9", "×", "÷",
                                 "4", "5", "6", "+", "-",
                                 "1", "2", "3", "=", "Delete",

@@ -12,10 +12,10 @@ public class NumberGuessingGamePanel extends JPanel {
                                 "4", "5", "6", "Enter", " ",
                                 "1", "2", "3", "0", " "};
 
+
         for (int i = 0; i < 15; i++) {
             add(new NumberGuessingGameButton(buttonsText[i]));
         }
-
         numberToBeGuessed = (int) (Math.random() * 101);
     }
 }

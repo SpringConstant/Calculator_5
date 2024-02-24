@@ -1,25 +1,30 @@
 import javax.swing.*;
 import java.awt.*;
 public class Frame extends JFrame {
-    //This class is used for the Calculator and the NumberGuessingGame only. The converter as its own classes
-
+    //acts like the Main class
     public Frame() {
         setSize(750,500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //3 panels (one for the whole calculator (CENTER), and
-        // another panel to choose what you'd like to use other than the calculator (NGG and convert) (EAST)
-        // and a third panel for the text box (NORTH)))
-
         setLayout(new BorderLayout());
-        //Creating a label for the text box (where the numbers will appear). It'll be at the top of the Frame
+        //The calculator and number guessing game have 3 panels.
+           // CENTER panel : (main buttons that do the job)
+           // NORTH panel : text Label
+           // EAST panel : Buttons to get to the other functions of the program
 
+        // Converter has only 2 panels.
+           // CENTER panel : 2 comboboxes (each of them are attached to a textField)
+           // EAST panel : Buttons to get toe the other functions of the program
 
         //adding calculator panel to start with and the panel to reach the other panels on the side
         add(new CalculatorPanel(), BorderLayout.CENTER);
-        setTitle("Calculator"); //setting the title of the frame as Calculator (temporary title)
-        add(new OtherFunctionsPanel(), BorderLayout.EAST);
+        setTitle("Calculator");
+        add(new OtherFunctionsPanel(this), BorderLayout.EAST);
         add(new TextPanel(), BorderLayout.NORTH);
         setResizable(false);
         setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new Frame();
     }
 }

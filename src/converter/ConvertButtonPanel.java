@@ -44,9 +44,7 @@ public class ConvertButtonPanel extends JPanel implements ActionListener {
         String unitConvertFrom = ((String) ConvertFromPanel.comboBoxConvertFrom.getSelectedItem()).toLowerCase();
         String unitConvertTo = ((String) ConvertToPanel.comboBoxConvertTo.getSelectedItem()).toLowerCase();
 
-        //if ((mass) tries to be converted into (volume)
-        //or (volume) tries to be converted into (mass))
-        //print error.
+        //if ((mass) tries to be converted into (volume) or (volume) tries to be converted into (mass)), print error.
         if ((unitConvertFrom.equals("kg") || unitConvertFrom.equals("g")) &&
                 (unitConvertTo.equals("l") || unitConvertTo.equals("ml") || unitConvertTo.equals("tsp") ||
                         unitConvertTo.equals("tbsp") || unitConvertTo.equals("cups")) ||
@@ -60,6 +58,7 @@ public class ConvertButtonPanel extends JPanel implements ActionListener {
 
 
         //ex : 10 Cups into L : 10 * 250 / 1000 = 2.5 L
+        //basically I'm converting everything to mL/g and dividing them by mL/g
         Double answer = numberToConvertFrom * usedMap.get(unitConvertFrom) / usedMap.get(unitConvertTo);
         ConvertToPanel.convertToTextField.setText(String.valueOf(answer));
         

@@ -10,7 +10,6 @@ import java.text.NumberFormat;
 
 public class ConverterTextField extends JFormattedTextField {
 
-
     public ConverterTextField(boolean Focusable) {
         setFocusable(Focusable); //will be true for ConvertFrom, but false for ConvertTo
         setPreferredSize(new Dimension(300, 100));

@@ -1,14 +1,15 @@
 import converter.ConverterPanel;
 import numberGuessingGame.NumberGuessingGamePanel;
 import numberGuessingGame.NumberGuessingGameTextPanel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class OtherFunctionsButton extends JButton implements ActionListener {
-    public OtherFunctionsButton(String text) {
+    public Frame frame;
+    public OtherFunctionsButton(Frame frame, String text) {
+        this.frame = frame;
         setText(text);
         setSize(5, 5); //its just 1 button
         setFocusable(false);
@@ -17,42 +18,42 @@ public class OtherFunctionsButton extends JButton implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JFrame Frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-        //Remove all the panel from the frame
-        Frame.getContentPane().removeAll();
-
-        //Make the Frame stay the size (for Calculator, Converter and NGG)
-        Frame.setPreferredSize(new Dimension(750,500));
-
-        //Set Border for the Frame
-        Frame.setLayout(new BorderLayout());
+        //remove all the panels from the frame
+        frame.getContentPane().removeAll();
 
 
-        //What the NGG, converter and Calculator buttons will do:
+        //set size of the frame
+        frame.setPreferredSize(new Dimension(750,500));
+
+
+        //set Border for the Frame
+        frame.setLayout(new BorderLayout());
+
+
+        //what the NGG, converter and Calculator buttons will do:
         switch (getText()) {
             case "Number Guessing Game" -> {
-                Frame.add(new  NumberGuessingGamePanel(), BorderLayout.CENTER);
-                Frame.setTitle("Number Guessing Game");
-                Frame.add(new NumberGuessingGameTextPanel(), BorderLayout.NORTH);
+                frame.add(new  NumberGuessingGamePanel(), BorderLayout.CENTER);
+                frame.setTitle("Number Guessing Game");
+                frame.add(new NumberGuessingGameTextPanel(), BorderLayout.NORTH);
             }
 
             case "Calculator" -> {
-                Frame.add(new CalculatorPanel(), BorderLayout.CENTER);
-                Frame.setTitle("Calculator");
-                Frame.add(new TextPanel(), BorderLayout.NORTH);
+                frame.add(new CalculatorPanel(), BorderLayout.CENTER);
+                frame.setTitle("Calculator");
+                frame.add(new TextPanel(), BorderLayout.NORTH);
             }
 
             case "Converter" ->{
-                Frame.add(new ConverterPanel(), BorderLayout.CENTER);
-                Frame.setTitle("Unit Converter");
+                frame.add(new ConverterPanel(), BorderLayout.CENTER);
+                frame.setTitle("Unit Converter");
             }
         }
 
-        Frame.add(new OtherFunctionsPanel(), BorderLayout.EAST);
-        Frame.getContentPane().validate();
-        Frame.getContentPane().repaint();
-
-        Frame.pack();
+        frame.add(new OtherFunctionsPanel(frame), BorderLayout.EAST);
+        frame.getContentPane().validate();
+        frame.getContentPane().repaint();
+        frame.pack();
         setVisible(true);
     }
 }
