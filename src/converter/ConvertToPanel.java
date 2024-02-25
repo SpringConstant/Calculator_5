@@ -7,8 +7,7 @@ public class ConvertToPanel extends JPanel {
     public ConvertToPanel(){
         convertToTextField = new ConverterTextField(false);
         comboBoxConvertTo = new ComboBox();
-
-        add(convertToTextField); //focusable false mean that i cannot type in the textfield
+        add(convertToTextField); //focusable false means that I cannot type in the text-field
         add(comboBoxConvertTo);
 
     }

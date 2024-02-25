@@ -2,7 +2,6 @@ package converter;
 
 import javax.swing.*;
 public class ConvertFromPanel extends JPanel {
-
     public static ConverterTextField convertFromTextField; //public because ill use it in the ConvertButtonPanel Class
     public static ComboBox comboBoxConvertFrom;
 

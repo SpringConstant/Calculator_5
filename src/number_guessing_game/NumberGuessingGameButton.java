@@ -4,20 +4,22 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static number_guessing_game.NumberGuessingGamePanel.RANGE;
 
 public class NumberGuessingGameButton extends JButton implements ActionListener {
 
     //these variables are used to see the level of difference between the answer and the user's input
     //that way, I can let the user know how close or how far he is from getting to the right answer
-    static final int fiftyPercentOf100 = (int) Math.round((0.50 * 100));
-    static final int fortyPercentOf100 = (int) Math.round((0.40 * 100));
-    static final int thirtyPercentOf100 = (int) Math.round((0.30 * 100));
-    static final int twentyPercentOf100 = (int) Math.round((0.20 * 100));
-    static final int tenPercentOf100 = (int) Math.round((0.10 * 100));
-    static final int fivePercentOf100 = (int) Math.round((0.05 * 100));
-    static final int twoPercentOf100 = (int) Math.round((0.02 * 100));
+    static final int fiftyPercentOfRange = (int) Math.round((0.50 * RANGE));
+    static final int fortyPercentOfRange = (int) Math.round((0.40 * RANGE));
+    static final int thirtyPercentOfRange = (int) Math.round((0.30 * RANGE));
+    static final int twentyPercentOfRange = (int) Math.round((0.20 * RANGE));
+    static final int tenPercentOfRange = (int) Math.round((0.10 * RANGE));
+    static final int fivePercentOfRange = (int) Math.round((0.05 * RANGE));
+    static final int twoPercentOfRange = (int) Math.round((0.02 * RANGE));
 
 
 
@@ -41,7 +43,7 @@ public class NumberGuessingGameButton extends JButton implements ActionListener 
         String labelText = NumberGuessingGameTextPanel.label.getText();
 
 
-        //check if there's text in the textlabel when pressing a button (if there is some text, then the label will be empty)
+        //check if there's text in the text label when pressing a button (if there is some text, then the label will be empty)
         Pattern pattern = Pattern.compile("[a-z]");
         Matcher matcher = pattern.matcher(labelText);
         boolean matchFound = matcher.find();
@@ -61,68 +63,10 @@ public class NumberGuessingGameButton extends JButton implements ActionListener 
             }
         }
 
-
         switch (getText()){
-            case "Enter" -> {
-                //if labelText is Empty, the given message will show
-                if (labelText.isEmpty()){
-                    NumberGuessingGameTextPanel.label.setText("Remember, you have to guess a number between 0 and 100!");
-                    break;
-                }
+            case "Enter" -> enter(labelText);
 
-                //erase the original message
-                NumberGuessingGameTextPanel.label.setText("");
-
-                //difference between the userInput and numberToBeGuessed
-                int userInput = Integer.parseInt(labelText);
-                int diff = (userInput - (NumberGuessingGamePanel.numberToBeGuessed));
-                if (diff == 0) {
-                    NumberGuessingGameTextPanel.label.setText("Congratulations! You've guessed the number!");
-                }
-
-
-                else if (userInput > 100 || userInput < 0){
-                    NumberGuessingGameTextPanel.label.setText("Remember, you have to guess a number between 0 and 100!");
-                }
-
-                else if (Math.abs(diff) > fiftyPercentOf100){
-                    NumberGuessingGameTextPanel.label.setText("Your number is waaaayyy too " + BigSmallSign(diff) + "! :P Try Again");
-                }
-
-                else if (Math.abs(diff) > fortyPercentOf100){
-                    NumberGuessingGameTextPanel.label.setText("Your number is too " + BigSmallSign(diff) + "! Try Again Lol");
-                }
-
-                else if (Math.abs(diff) > thirtyPercentOf100){
-                    NumberGuessingGameTextPanel.label.setText("Still pretty far. Your number is unfortunately a bit too " + BigSmallSign(diff) + " :( Try Again");
-                }
-
-                else if (Math.abs(diff) > twentyPercentOf100){
-                    NumberGuessingGameTextPanel.label.setText("OOF IT'S GETTING HOT. Try again for a number that is " + DiffSign(diff) + ". Try again. You got this.");
-                }
-
-                else if (Math.abs(diff) > tenPercentOf100){
-                    NumberGuessingGameTextPanel.label.setText("nope, not it lol. Try for a " + DiffSign(diff) + " number");
-                }
-
-                else if (Math.abs(diff) > fivePercentOf100){
-                    NumberGuessingGameTextPanel.label.setText("You're so close!!!! Too bad your answer is a bit too " + BigSmallSign(diff) + ".");
-                }
-
-                else if (Math.abs(diff) > twoPercentOf100){
-                    NumberGuessingGameTextPanel.label.setText("YOU'RE GETTING THERE. Try again for a " + DiffSign(diff) + " number. Good luck mate");
-                }
-
-                else if (Math.abs(diff) <= twoPercentOf100){
-                    NumberGuessingGameTextPanel.label.setText("UGH YOU'RE ALMOST TO THE FINISHED LINE!!!! I am not giving any more hints anymore");
-                }
-            }
-
-
-            case "Reset" -> {
-                reset();
-            }
-
+            case "Reset" -> reset();
 
             case "Delete" -> {
                 if (labelText.isEmpty()){
@@ -134,9 +78,71 @@ public class NumberGuessingGameButton extends JButton implements ActionListener 
         }
     } //end of override
 
+    private static void enter(String labelText) {
+        //if labelText is Empty, the given message will show
+        if (labelText.isEmpty()){
+            NumberGuessingGameTextPanel.label.setText("Remember, you have to guess a number between 0 and " + RANGE + "!");
+            return;
+        }
+
+        //erase the original message
+        NumberGuessingGameTextPanel.label.setText("");
+
+        //difference between the userInput and numberToBeGuessed
+        int userInput = Integer.parseInt(labelText);
+        int diff = (userInput - (NumberGuessingGamePanel.numberToBeGuessed));
+
+        if (diff == 0) {
+            NumberGuessingGameTextPanel.label.setText("Congratulations! You've guessed the number!");
+        }
+
+        else if (userInput > RANGE || userInput < 0){
+            NumberGuessingGameTextPanel.label.setText("Remember, you have to guess a number between 0 and " + RANGE + "!");
+        }
+
+        else {
+            int absoluteDiff = Math.abs(diff);
+            if (absoluteDiff > fiftyPercentOfRange){
+                NumberGuessingGameTextPanel.label.setText("Your number is waaaayyy too " + bigSmallSign(diff) + "! :P Try Again");
+            }
+
+            else if (absoluteDiff > fortyPercentOfRange){
+                NumberGuessingGameTextPanel.label.setText("Your number is too " + bigSmallSign(diff) + "! Try Again Lol");
+            }
+
+            else if (absoluteDiff > thirtyPercentOfRange){
+                NumberGuessingGameTextPanel.label.setText("Still pretty far. Your number is unfortunately a bit too " + bigSmallSign(diff) + " :( Try Again");
+            }
+
+            else if (absoluteDiff > twentyPercentOfRange){
+                NumberGuessingGameTextPanel.label.setText("OOF IT'S GETTING HOT. Try again for a number that is " + diffSign(diff) + ". Try again. You got this.");
+            }
+
+            else if (absoluteDiff > tenPercentOfRange){
+                NumberGuessingGameTextPanel.label.setText("nope, not it lol. Try for a " + diffSign(diff) + " number");
+            }
+
+            else if (absoluteDiff > fivePercentOfRange){
+                NumberGuessingGameTextPanel.label.setText("You're so close!!!! Too bad your answer is a bit too " + bigSmallSign(diff) + ".");
+            }
+
+            else if (absoluteDiff > twoPercentOfRange){
+                NumberGuessingGameTextPanel.label.setText("YOU'RE GETTING THERE. Try again for a " + diffSign(diff) + " number. Good luck mate");
+            }
+
+            else if (absoluteDiff == 1){
+                NumberGuessingGameTextPanel.label.setText("UGH YOU'RE ALMOST TO THE FINISHED LINE!!!! I am not giving any more hints anymore");
+            }
+
+            else {
+                NumberGuessingGameTextPanel.label.setText("Extremely extremely close. Go for a " + diffSign(diff) + " number. Good Luck!");
+            }
+        }
+    }
+
 
     //prints big or small
-    public static String BigSmallSign(int diff){
+    public static String bigSmallSign(int diff){
         //userInput is greater that the numberToBeGuessed
         if (diff > 0){
             return "big";
@@ -148,7 +154,7 @@ public class NumberGuessingGameButton extends JButton implements ActionListener 
 
 
     //prints bigger/smaller
-    public static String DiffSign(int diff) {
+    public static String diffSign(int diff) {
         //userInput is greater that the numberToBeGuessed
         if (diff > 0) {
             return "smaller";
@@ -158,9 +164,8 @@ public class NumberGuessingGameButton extends JButton implements ActionListener 
     }
 
 
-
     public void reset(){
-        NumberGuessingGamePanel.numberToBeGuessed = (int) (Math.random() * 101); //numberToBeGuessed is an instance variable
-        NumberGuessingGameTextPanel.label.setText("Guess a number between 0 and 100");
+        NumberGuessingGamePanel.numberToBeGuessed = new Random().nextInt(RANGE); //numberToBeGuessed is an instance variable
+        NumberGuessingGameTextPanel.label.setText("Guess a number between 0 and " + RANGE + "!");
     }
 }
